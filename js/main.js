@@ -24,7 +24,7 @@ function agregarProducto() {
 
     // Verificar que los campos no estén vacíos y el precio sea válido
     if (nombreProducto === "" || isNaN(precioProducto) || precioProducto <= 0) {
-        alert("Por favor, ingrese un nombre de producto válido y un precio numérico mayor que cero.");
+        mostrarMensaje("Por favor, ingrese un nombre de producto válido y un precio numérico mayor que cero.", "error");
         return;
     }
     const idProducto = Date.now();
@@ -37,13 +37,7 @@ function agregarProducto() {
     guardarListaEnLocalStorage();
 
     // Mostrar notificación de éxito
-    Toastify({
-        text: "Producto agregado correctamente",
-        duration: 1500,
-        close: true,
-        gravity: "top",
-        backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
-    }).showToast();
+    mostrarMensaje("Producto agregado correctamente", "exito");
 }
 
 // Eliminar un producto de la lista
@@ -53,13 +47,7 @@ function eliminarProducto(idProducto) {
     guardarListaEnLocalStorage();
 
     // Mostrar notificación de éxito
-    Toastify({
-        text: "Producto eliminado correctamente",
-        duration: 1500,
-        close: true,
-        gravity: "top",
-        backgroundColor: "linear-gradient(to right, #ff5f6d, #ffc371)",
-    }).showToast();
+    mostrarMensaje("Producto eliminado correctamente", "exito");
 }
 
 // Buscar productos en la lista
@@ -99,13 +87,7 @@ function editarProducto(idProducto) {
             actualizarLista();
 
             // Mostrar notificación de éxito
-            Toastify({
-                text: "Producto editado correctamente",
-                duration: 1500,
-                close: true,
-                gravity: "top",
-                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
-            }).showToast();
+            mostrarMensaje("Producto editado correctamente", "exito");
         }
     });
 }
@@ -131,6 +113,17 @@ function actualizarLista(productos = listaCompras, contenedorId = "lista-compras
     if (contenedorId === "lista-compras") {
         document.getElementById("total").textContent = `Total: $${totalPrecio.toFixed(2)}`;
     }
+}
+
+// Mostrar mensaje utilizando Toastify
+function mostrarMensaje(mensaje, tipo) {
+    Toastify({
+        text: mensaje,
+        duration: 1500,
+        close: true,
+        gravity: "top",
+        backgroundColor: tipo === "exito" ? "linear-gradient(to right, #00b09b, #96c93d)" : "linear-gradient(to right, #ff5f6d, #ffc371)",
+    }).showToast();
 }
 
 // Limpiar campos de entrada
